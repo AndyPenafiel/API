@@ -19,9 +19,9 @@ app.get('/', (req, res) => {
   res.send('¡Hola Mundo!');
 });
 
-app.get('/ping', async (req, res) => {
+app.get('/usuarios', async (req, res) => {
   const result = await pool.query('select * from usuarios');
-  return res.json(result.rows[0]); // Usar 'rows' en lugar de 'row'
+  return res.json(result.rows[result.rows]); // Usar 'rows' en lugar de 'row'
 });
 
 // Iniciar el servidor
