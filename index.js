@@ -9,9 +9,6 @@ dotenv.config();
 const app = express();
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false // Asegúrate de que este valor sea adecuado para tu configuración
-  }
 });
 
 // Definir un puerto para nuestro servidor
