@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/ping', async (req, res) => {
-  const result = await pool.query('SELECT NOW()');
+  const result = await pool.query('select * from usuarios');
   return res.json(result.rows[0]); // Usar 'rows' en lugar de 'row'
 });
 
