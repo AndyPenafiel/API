@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-render-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
