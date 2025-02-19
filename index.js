@@ -20,9 +20,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/usuarios', async (req, res) => {
-  const result = await pool.query('select * from usuarios');
-  return res.json(result.rows[result.rows]); // Usar 'rows' en lugar de 'row'
+  try {
+    const result = await pool.query('SELECT * FROM usuarios');
+    return res.json(result.rows); // Devuelve todos los usuarios
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Error al obtener los usuarios' });
+  }
 });
+
 
 // Iniciar el servidor
 app.listen(port, () => {
