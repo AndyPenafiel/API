@@ -32,7 +32,9 @@ app.get('/usuarios', async (req, res) => {
 app.get('/buscar_usuario/cedula/:cedula', async (req, res) => {
   const { cedula } = req.params; // Obtener la cédula de los parámetros de la URL
   try {
-    const result = await pool.query('SELECT * FROM usuarios WHERE cedula = $1', [cedula]);
+    // Consulta sin parámetros $1, directamente en la consulta
+    const result = await pool.query(`SELECT * FROM usuarios WHERE cedula = '${cedula}'`);
+    
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
@@ -42,6 +44,7 @@ app.get('/buscar_usuario/cedula/:cedula', async (req, res) => {
     return res.status(500).json({ error: 'Error al obtener el usuario' });
   }
 });
+
 
 
 // Iniciar el servidor
