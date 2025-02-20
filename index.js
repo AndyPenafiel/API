@@ -29,26 +29,19 @@ app.get('/usuarios', async (req, res) => {
   }
 });
 
-// Ruta para eliminar un usuario por cédula
-app.delete('/delete_usuario/:cedula', async (req, res) => {
-  const { cedula } = req.params; // Obtenemos la cédula del usuario a eliminar
+app.get('/buscar_usuario/cedula/:cedula', async (req, res) => {
+  const { cedula } = req.params; // Obtener la cédula de los parámetros de la URL
   try {
-    // Realizamos la consulta para eliminar el usuario en la base de datos
-    const result = await pool.query('DELETE FROM usuarios WHERE cedula = $1', [cedula]);
-    
-    // Verificamos si el usuario fue encontrado y eliminado
-    if (result.rowCount === 0) {
+    const result = await pool.query('SELECT * FROM usuarios WHERE cedula = $1', [cedula]);
+    if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
-
-    return res.status(200).json({ message: 'Usuario eliminado correctamente' });
+    return res.json(result.rows[0]); // Devuelve el usuario encontrado
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: 'Error al eliminar el usuario' });
+    return res.status(500).json({ error: 'Error al obtener el usuario' });
   }
 });
-
-
 
 
 // Iniciar el servidor
