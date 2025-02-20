@@ -11,6 +11,9 @@ const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+// Middleware para parsear el cuerpo de las solicitudes como JSON
+app.use(express.json());
+
 // Definir un puerto para nuestro servidor
 const port = process.env.PORT || 3000; // Usar process.env.PORT si está disponible
 
@@ -32,7 +35,6 @@ app.get('/usuarios', async (req, res) => {
 app.get('/buscar_usuario/cedula/:cedula', async (req, res) => {
   const { cedula } = req.params; // Obtener la cédula de los parámetros de la URL
   try {
-    // Consulta sin parámetros $1, directamente en la consulta
     const result = await pool.query(`SELECT * FROM usuarios WHERE cedula = '${cedula}'`);
     
     if (result.rows.length === 0) {
@@ -99,8 +101,6 @@ app.delete('/eliminar_usuario/cedula/:cedula', async (req, res) => {
     return res.status(500).json({ error: 'Error al eliminar el usuario' });
   }
 });
-
-
 
 // Iniciar el servidor
 app.listen(port, () => {
